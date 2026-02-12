@@ -20,6 +20,9 @@ importers:
 
   apps/http-backend:
     dependencies:
+      '@repo/common-jwtsecret':
+        specifier: workspace:*
+        version: link:../../packages/common-jwtsecret
       '@repo/zod':
         specifier: workspace:*
         version: link:../../packages/zod
@@ -89,6 +92,8 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+
+  packages/common-jwtsecret: {}
 
   packages/eslint-config:
     devDependencies:

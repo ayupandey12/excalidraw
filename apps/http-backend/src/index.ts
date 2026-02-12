@@ -1,6 +1,6 @@
 import express from "express"
 import { middleware } from "./middleware";
-import { Signinschema } from "@repo/zod/index";
+import { Roomschema, Signinschema ,Signupschema} from "@repo/zod/index";
 
 
 const app=express();
@@ -10,13 +10,25 @@ app.post('/signup',(req,res)=>{
     const respone=Signinschema.safeParse(req.body)
     if(!respone.success)
     {
-        
+        res.json({mess:"invalid schema"})
+        return ;
     }
+    
 })
 app.post('/signin',(req,res)=>{
-    
+    const respone=Signupschema.safeParse(req.body)
+    if(!respone.success)
+    {
+        res.json({mess:"invalid schema"})
+        return ;
+    }
 })
 app.post('/room',middleware,(req,res)=>{
-    
+    const respone=Roomschema.safeParse(req.body)
+    if(!respone.success)
+    {
+        res.json({mess:"invalid schema"})
+        return ;
+    }
 })
 app.listen(3001)
