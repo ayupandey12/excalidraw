@@ -1,6 +1,7 @@
 import express from "express"
 import { middleware } from "./middleware";
 import { Roomschema, Signinschema ,Signupschema} from "@repo/zod/index";
+import { prisma } from "@repo/db/index";
 
 
 const app=express();
