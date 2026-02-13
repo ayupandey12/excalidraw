@@ -1,23 +1,22 @@
 {
-  "name": "db",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "db:migrate":"prisma migrate dev",
-    "db:generate":"prisma generate",
-    "db:deploy" :"prisma migrate deploy"
+  "name": "@repo/db",
+  "version": "0.0.0",
+   "scripts": {
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev ",
+    "db:deploy": "prisma migrate deploy"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@prisma/adapter-pg": "^7.4.0",
-    "@prisma/client": "^7.4.0",
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "dotenv": "^16.0.3",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
     "@types/pg": "^8.16.0",
-    "dotenv": "^17.3.1",
-    "pg": "^8.18.0",
-    "prisma": "^7.4.0"
+    "prisma": "^7.2.0"
+  },
+  "exports": {
+     ".": "./src/index.ts"
   }
 }
