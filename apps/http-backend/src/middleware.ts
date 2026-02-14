@@ -10,7 +10,8 @@ export const middleware=  (req:Request,res:Response,next:NextFunction)=>{
       return;
    }
    else
-   {  req.userId=(decode as JwtPayload).userId;
+   {    // @ts-ignore
+        req.userId=(decode as JwtPayload).userId;
       next()
    }
 }
