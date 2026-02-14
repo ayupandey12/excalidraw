@@ -1,13 +1,14 @@
 import express from "express"
-import { middleware } from "./middleware";
 import { Roomschema, Signinschema ,Signupschema} from "@repo/zod/index";
-import { prisma } from "@repo/db/index";
+import { middleware } from "./middleware";
+
 
 
 const app=express();
  
-app.post('/signup',(req,res)=>{
-
+app.post('/signup',async (req,res)=>{
+    // const user=await prisma.user.findMany({});
+    // console.log(user);
     const respone=Signinschema.safeParse(req.body)
     if(!respone.success)
     {
