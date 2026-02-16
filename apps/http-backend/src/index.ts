@@ -15,11 +15,21 @@ app.get("/",async (req,res)=>{
 
 app.post('/signup',async (req,res)=>{
    
-    const respone=Signinschema.safeParse(req.body)
+    const respone=Signupschema.safeParse(req.body)
     if(!respone.success)
     {
         res.json({mess:"invalid schema"})
         return ;
+    }
+    try {
+        const user=await prisma.user.create({
+            data:{
+                name:respone.data.name,
+                ema
+            }
+        })
+    } catch (error) {
+        
     }
     
 })
