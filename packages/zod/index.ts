@@ -1,11 +1,11 @@
 import {z} from "zod"
 export const Signinschema=z.object({
-    username: z.string(),
+    email: z.email(),
     password: z.string()
 })
 export const Signupschema=z.object({
-    username: z.string(),
-    password: z.string(),
+    email: z.email(),
+    password: z.string().min(5,{message:"password length should be greated than 4"}),
     name:     z.string()
 })
 export const Roomschema=z.object({
