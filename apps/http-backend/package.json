@@ -10,14 +10,17 @@
     "start": "pnpm run build && pnpm run dev"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*"
+    "@repo/typescript-config": "workspace:*",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@repo/common-jwtsecret":"workspace:*",
-    "@repo/zod":"workspace:*",
+    "@repo/common-jwtsecret": "workspace:*",
+    "@repo/db": "workspace:*",
+    "@repo/zod": "workspace:*",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "express": "^5.2.1",
