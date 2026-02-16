@@ -44,3 +44,13 @@ export { Prisma }
  * 
  */
 export type user = Prisma.userModel
+/**
+ * Model room
+ * 
+ */
+export type room = Prisma.roomModel
+/**
+ * Model messages
+ * 
+ */
+export type messages = Prisma.messagesModel

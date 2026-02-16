@@ -17,4 +17,21 @@ model user{
   name String
   username String @unique
   password String
+  room room[]
+  messages messages[]
+}
+model room{
+id Int @id @default(autoincrement())
+adminId String
+createdAt DateTime @default(now())
+admin user @relation(fields: [adminId],references: [id])
+messages messages[]
+}
+model messages{
+id Int @id @default(autoincrement())
+userId String
+message String
+roomId Int
+room room @relation(fields: [roomId],references: [id])
+user user @relation(fields: [userId],references: [id])
 }

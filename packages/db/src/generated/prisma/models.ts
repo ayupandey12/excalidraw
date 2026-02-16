@@ -9,4 +9,6 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/user.js'
+export type * from './models/room.js'
+export type * from './models/messages.js'
 export type * from './commonInputTypes.js'
