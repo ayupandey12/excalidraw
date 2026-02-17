@@ -101,4 +101,36 @@ app.post('/room',middleware,async(req,res)=>{
         return;
     }
 })
+app.get('/chat/:roomId',async(req,res)=>{
+    const roomId=Number(req.params.roomId)
+     try {
+         const chat=await prisma.messages.findMany({
+            where:{
+                roomId:roomId
+            },
+            orderBy:{
+                id:"desc"
+            },
+            take:50
+         })
+         res.status(200).json(chat);
+         return;
+     } catch (error) {
+         res.status(411).json({mess:"no room with this room id"})
+     }
+})
+app.get('/findroomid/:roomname',async (req,res)=>{
+    const roomname=req.params.roomname;
+    try {
+        const room=await prisma.room.findFirst({
+            where:{
+                name:roomname
+            }
+        })
+        res.status(200).json(room);
+        return ;
+    } catch (error) {
+        res.status(411).json({mess:"no roomId  with this roomname "})
+    }
+})
 app.listen(3010)
