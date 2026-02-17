@@ -17,6 +17,7 @@ model user{
   name String
   email String @unique
   password String
+  image String?
   room room[]
   messages messages[]
 }
