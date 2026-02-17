@@ -10,5 +10,6 @@ export const Signupschema=z.object({
     image: z.string().optional()
 })
 export const Roomschema=z.object({
-   room:z.string()
+   name:z.string().min(5,{message:"room name length should be greated than 4"}).max(15,{message:"room name length should be less than 16"}),
+   createdAt:z.date().optional()
 })

@@ -9,6 +9,7 @@ console.log(process.env.DATABASE_URL)
 
 
 const app=express();
+app.use(express.json());
 app.get("/",async (req,res)=>{
      const user=await prisma.user.findMany({});
     console.log(user);
@@ -52,7 +53,8 @@ app.post('/signin',async (req,res)=>{
         return ;
     }
     const user=await prisma.user.findFirst({where:{
-        email:respone.data.email
+        email:respone.data.email,
+        password:respone.data.password
     }})
     if(!user)
     {
@@ -71,17 +73,32 @@ app.post('/signin',async (req,res)=>{
         })
     }
 })
-app.post('/room',middleware,(req,res)=>{
+app.post('/room',middleware,async(req,res)=>{
     const respone=Roomschema.safeParse(req.body)
     if(!respone.success)
     { 
         res.json({mess:"invalid schema"})
         return ;
     }
+    //@ts-ignore
+    const userId=req.userId;
     try {
-        
+        const room=await prisma.room.create({
+            data:{
+                name:respone.data.name,
+                adminId:userId
+            }
+        })
+        res.status(200).json({
+            mess:"room is created successfully!",
+            roomId:room.id
+        })
+        return;
     } catch (error) {
-        
+        res.status(411).json({
+            mess:"room name is already taken !"
+        })
+        return;
     }
 })
 app.listen(3010)
