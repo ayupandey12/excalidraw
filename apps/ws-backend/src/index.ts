@@ -2,6 +2,23 @@ import { WebSocket, WebSocketServer } from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_SECRET } from "@repo/common-jwtsecret/index"
 import { prisma } from "@repo/db";
+function getuser(token:string):string|null{
+ try {
+  const decode =jwt.verify(token,JWT_SECRET)
+   if(typeof(decode)==="string")
+   { 
+    return null ;
+   }
+  
+  if(!decode||!decode.userId)
+  { 
+    return null;
+  }
+  return decode.userId
+ } catch (error) {
+  return null
+ }
+}
 type User={
   ws:WebSocket,
   roomId:number[],
@@ -9,26 +26,21 @@ type User={
 }
 const user:User[]=[];
 const wss=new WebSocketServer({port:8080},()=>{console.log("ws server created")})
-wss.on("connection",(ws,request)=>{
+wss.on("connection",async(ws,request)=>{
    ws.on("error",console.error);
   const url=request.url
   const query=new URLSearchParams(url?.split("?")[1])
   const token=query.get("token")||""
-  const decode =jwt.verify(token,JWT_SECRET)
-   if(typeof(decode)==="string")
-   { ws.close();
-    return ;
-   }
-
-  if(!decode||!decode.userId)
+  const userId=getuser(token)
+  if(!userId)
   {
     ws.close();
-    return ;
+    return;
   }
   user.push({
     ws:ws,
     roomId:[],
-    userId:decode.userId
+    userId:userId
   })
   ws.on("message",async(data)=>{ //comming data is in string form 
     const parsedata=JSON.parse(data as unknown as string)
@@ -57,9 +69,6 @@ wss.on("connection",(ws,request)=>{
             }));
           }
          })
-
-         
       }   
-
   })
 })
