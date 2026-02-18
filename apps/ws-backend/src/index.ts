@@ -1,7 +1,9 @@
+import "dotenv/config"
 import { WebSocket, WebSocketServer } from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_SECRET } from "@repo/common-jwtsecret/index"
 import { prisma } from "@repo/db";
+console.log(process.env.DATABASE_URL);
 function getuser(token:string):string|null{
  try {
   const decode =jwt.verify(token,JWT_SECRET)
@@ -59,6 +61,13 @@ wss.on("connection",async(ws,request)=>{
       {
          const roomId =parsedata.roomId;
          const message=parsedata.message;
+         await prisma.messages.create({ //idealy use queue
+          data:{
+            message:message,
+            roomId:roomId,
+            userId:userId
+          }
+         })
          user.forEach(u=>{
           if(u.roomId.includes(roomId))
           {
