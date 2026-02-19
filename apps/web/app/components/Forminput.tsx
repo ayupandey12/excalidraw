@@ -1,7 +1,10 @@
 "use client"
+import { Eye, EyeOff } from "lucide-react"; 
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react"
 
 export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
+    const router=useRouter()
     const [name, setname] = useState<string>("")
     const [email, setemail] = useState<string>("")
     const [password, setpassword] = useState<string>("")
@@ -11,7 +14,7 @@ export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 p-4 font-sans">
            
-            <div className="w-full max-w-[340px] bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col border border-gray-100">
+            <div className="w-full max-w-85 bg-white rounded-4xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col border border-gray-100">
                 
                 
                 <div className="relative h-40 bg-black flex items-center justify-center overflow-hidden">
@@ -50,8 +53,8 @@ export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
                     <div className="mt-6 text-center">
                         <button className="text-[12px] font-medium text-gray-500 hover:text-black transition-colors group">
                             {type === "signin" ? 
-                                <>Don't have an account? <span className="font-bold text-black border-b border-black ml-1">Sign Up</span></> : 
-                                <>Already have an account? <span className="font-bold text-black border-b border-black ml-1 text-xs">Sign In</span></>
+                                <>Don't have an account? <span onClick={()=>{router.push('/signup')}} className="font-bold text-black border-b border-black ml-1">Sign Up</span></> : 
+                                <>Already have an account? <span onClick={()=>{router.push('/signin')}} className="font-bold text-black border-b border-black ml-1 text-xs">Sign In</span></>
                             }
                         </button>
                     </div>
@@ -63,16 +66,12 @@ export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
 
 
 
-
-
-import { Eye, EyeOff } from "lucide-react"; // Import eye icons
-
 export const Inputbox = ({ type, placeholder, onchange, title, value }: {
     type: string, placeholder: string, onchange: (value: string) => void, title: string, value: string
 }) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    // Determine the actual input type based on toggle state
+    // find type base on eye 
     const inputType = type === "password" && showPassword ? "text" : type;
 
     return (
