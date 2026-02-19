@@ -46,7 +46,7 @@ export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
                         <Inputbox type="password" placeholder="••••••••" onchange={setpassword} title="Password" value={password}/>
                     </div>
 
-                    <button className="w-full mt-6 py-3.5 bg-black hover:bg-gray-800 text-white text-sm font-bold rounded-xl transition-all active:scale-95 shadow-md">
+                    <button type="submit" className="w-full mt-6 py-3.5 bg-black hover:bg-gray-800 text-white text-sm font-bold rounded-xl transition-all active:scale-95 shadow-md">
                         {type === "signin" ? "Login" : "Sign Up"}
                     </button>
 
