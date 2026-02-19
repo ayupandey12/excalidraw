@@ -14,9 +14,9 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="relative z-[100]">
+    <nav className="relative z-100">
       <div className="flex justify-between items-center px-8 md:px-16 py-6 text-white">
-        {/* Logo */}
+        
         <div className="text-xl font-bold tracking-tighter flex items-center gap-2">
           <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
             <MessageCircle size={14} className="text-[#9333ea]" />
@@ -24,7 +24,7 @@ export default function Navbar() {
           Chat<span className="font-light opacity-80">Flow</span>
         </div>
 
-        {/* Desktop Navigation */}
+        
         <div className="hidden md:flex items-center gap-6 text-[13px] font-medium tracking-wide">
           {navLinks.map((link, index) => (
             <div key={link.name} className="flex items-center gap-6">
@@ -37,17 +37,17 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Hamburger Button (Mobile Only) */}
+        
         <button 
-          className="md:hidden z-[110] p-2 hover:bg-white/10 rounded-lg transition-colors"
+          className="md:hidden z-110 p-2 hover:bg-white/10 rounded-lg transition-colors"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Mobile Menu Overlay - Styled to match your image */}
-      <div className={`fixed inset-0 bg-[#7e22ce]/95 backdrop-blur-2xl z-[100] flex flex-col items-center justify-center transition-all duration-500 ease-in-out ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}>
+      {/* Mobile Menu Overlay */}
+      <div className={`fixed inset-0 bg-[#7e22ce]/95 backdrop-blur-2xl z-100 flex flex-col items-center justify-center transition-all duration-500 ease-in-out ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}>
         <div className="flex flex-col items-center gap-8 text-center">
           {navLinks.map((link) => (
             <Link 
