@@ -1,6 +1,8 @@
+import { Forminput } from "../components/Forminput"
+
 const signin=()=>{
     return (
-        <div>singin</div>
+       <Forminput type="signin"/>
     )
 }
 export default signin
