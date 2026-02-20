@@ -21,11 +21,33 @@ app.post('/signup',async (req,res)=>{
     const respone=Signupschema.safeParse(req.body)
     
     if(!respone.success)
-    {
-        res.json({mess:respone.error.message??"invalid credentials"})
+    {   const message=JSON.parse(respone.error.message||"")
+        res.json({mess:message[0].message??"invalid credentials"})
         return ;
     }
     try {
+        const name=await prisma.user.findFirst({
+            where:{
+                name:respone.data.name
+            }
+        })
+        if(name) 
+        {
+            res.status(411).json({
+            mess:"name is already in use , try with different name"})
+             return
+         }
+         const email=await prisma.user.findFirst({
+            where:{
+                email:respone.data.email
+            }
+        })
+        if(email) 
+        {
+            res.status(411).json({
+            mess:"email is already in use , try with different email"})
+            return
+        }
         const user=await prisma.user.create({
             data:{
                 name:respone.data.name,
@@ -40,7 +62,8 @@ app.post('/signup',async (req,res)=>{
         })
     } catch (error) {
         return res.status(411).json({
-            mess:"something wrong while signup!"
+            mess:"something went wrong while signup!",
+            
         })
     }
     
@@ -49,7 +72,8 @@ app.post('/signin',async (req,res)=>{
     const respone=Signinschema.safeParse(req.body)
     if(!respone.success)
     {
-        res.json({mess:respone.error.message??"invalid credentials"})
+        const message=JSON.parse(respone.error.message||"")
+        res.json({mess:message[0].message??"invalid credentials"})
         return ;
     }
     const user=await prisma.user.findFirst({where:{
@@ -77,7 +101,8 @@ app.post('/room',middleware,async(req,res)=>{
     const respone=Roomschema.safeParse(req.body)
     if(!respone.success)
     { 
-        res.json({mess:"invalid schema"})
+        const message=JSON.parse(respone.error.message||"")
+        res.json({mess:message[0].message??"invalid credentials"})
         return ;
     }
     //@ts-ignore
