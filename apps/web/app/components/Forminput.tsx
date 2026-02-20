@@ -2,14 +2,12 @@
 import { Eye, EyeOff } from "lucide-react"; 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react"
+import { Formbutton } from "./Formbutton";
+
 
 export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
+   
     const router=useRouter()
-    const [name, setname] = useState<string>("")
-    const [email, setemail] = useState<string>("")
-    const [password, setpassword] = useState<string>("")
-
-    useEffect(() => { console.log(name, email, password) }, [name, email, password])
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 p-4 font-sans">
@@ -37,18 +35,9 @@ export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
                     <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center tracking-tight">
                         {type === "signin" ? "Login" : "Sign Up"}
                     </h1>
-
-                    <div className="space-y-1">
-                        {type !== "signin" && (
-                            <Inputbox type="text" placeholder="John" onchange={setname} title="First Name" value={name}/>
-                        )}
-                        <Inputbox type="email" placeholder="mail@example.com" onchange={setemail} title="Email Address" value={email}/>
-                        <Inputbox type="password" placeholder="••••••••" onchange={setpassword} title="Password" value={password}/>
-                    </div>
-
-                    <button type="submit" className="w-full mt-6 py-3.5 bg-black hover:bg-gray-800 text-white text-sm font-bold rounded-xl transition-all active:scale-95 shadow-md">
-                        {type === "signin" ? "Login" : "Sign Up"}
-                    </button>
+                    
+                   
+                    <Formbutton type={type}/>
 
                     <div className="mt-6 text-center">
                         <button className="text-[12px] font-medium text-gray-500 hover:text-black transition-colors group">
