@@ -88,7 +88,7 @@ app.post('/signin',async (req,res)=>{
       try {
         const token=jwt.sign({userId:user.id},JWT_SECRET)
         return res.status(200).json({
-            mess:"signup successfull",
+            mess:"signin successfull",
             token:token
         })
     } catch (error) {

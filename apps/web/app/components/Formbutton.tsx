@@ -3,7 +3,8 @@ import "dotenv/config"
 import { useEffect, useState } from "react"
 import { useFormStatus } from "react-dom"
 import { Inputbox } from "./Forminput"
-import axios from "axios"
+import { Formsubmitaction } from "../lib/actions/Formsubmit"
+
 //useformstatus work for parent so make submitbutton as component of formbutton
 const SubmitButton = ({ type }: { type: "signin" | "signup" }) => {
     const { pending } = useFormStatus();
@@ -36,12 +37,7 @@ export const Formbutton = ({ type }: { type: "signin" | "signup" }) => {
 
     useEffect(() => { console.log({ name, email, password }) }, [name, email, password])
       
-    async function Formsubmitaction({ type,name,email,password }: { type: "signin" | "signup",name:string,email:string,password:string }) {
-    console.log(`${process.env.HTTP_URL}/${type}`)
-    const user=await axios.post(`${process.env.HTTP_URL}/${type}`,{name,email,password})
-      console.log(user.data.mess)
     
-     }
     return (
         <form action={async () => {
             // Simulate 3 second API call
