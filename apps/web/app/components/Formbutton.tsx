@@ -34,6 +34,8 @@ export const Formbutton = ({ type }: { type: "signin" | "signup" }) => {
     const [name, setname] = useState<string>("")
     const [email, setemail] = useState<string>("")
     const [password, setpassword] = useState<string>("")
+    const [error,seterror]=useState<boolean>(false);
+    const [mes,setmes]=useState<string>("");
 
     useEffect(() => { console.log({ name, email, password }) }, [name, email, password])
       
@@ -41,15 +43,25 @@ export const Formbutton = ({ type }: { type: "signin" | "signup" }) => {
     return (
         <form action={async () => {
             // Simulate 3 second API call
-           await Formsubmitaction({type:type,name:name,email:email,password:password})
-            console.log("Form Submitted Successfully:", { name, email, password });
+         const {mess,token}=  await Formsubmitaction({type:type,name:name,email:email,password:password})
+         if(!token) {
+            seterror(true);
+         }
+         else
+         {  
+            seterror(false);
+            localStorage.setItem("token",`Bearer ${token}`)
+         }
+           setmes(mess)
+            return;
         }}>
             <div className="space-y-1">
                 {type !== "signin" && (
-                    <Inputbox type="text" placeholder="John" onchange={setname} title="First Name" value={name}/>
+                    <Inputbox type="text" placeholder="John" onchange={setname} title="First Name" value={name} onclick={setmes}/>
                 )}
-                <Inputbox type="email" placeholder="mail@example.com" onchange={setemail} title="Email Address" value={email}/>
-                <Inputbox type="password" placeholder="••••••••" onchange={setpassword} title="Password" value={password}/>
+                <Inputbox type="email" placeholder="mail@example.com" onchange={setemail} title="Email Address" value={email} onclick={setmes}/>
+                <Inputbox type="password" placeholder="••••••••" onchange={setpassword} title="Password" value={password} onclick={setmes}/>
+                <div className={` text-center ${error?`text-red-600`:`text-green-600`} `}>{mes}</div>
             </div>
 
             

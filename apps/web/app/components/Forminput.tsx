@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react"
 import { Formbutton } from "./Formbutton";
+import { SERVER_PROPS_EXPORT_ERROR } from "next/dist/lib/constants";
 
 
 export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
@@ -55,8 +56,8 @@ export const Forminput = ({ type }: { type: "signin" | "signup" }) => {
 
 
 
-export const Inputbox = ({ type, placeholder, onchange, title, value }: {
-    type: string, placeholder: string, onchange: (value: string) => void, title: string, value: string
+export const Inputbox = ({ type, placeholder, onchange, title, value,onclick }: {
+    type: string, placeholder: string, onchange: (value: string) => void, title: string, value: string,onclick:(value:string)=>void
 }) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -70,6 +71,7 @@ export const Inputbox = ({ type, placeholder, onchange, title, value }: {
             </label>
             <div className="relative">
                 <input 
+                    onClick={()=>{onclick("")}}
                     type={inputType} 
                     placeholder={placeholder} 
                     value={value}
