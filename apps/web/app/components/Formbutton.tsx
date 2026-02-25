@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useFormStatus } from "react-dom"
 import { Inputbox } from "./Forminput"
 import { Formsubmitaction } from "../lib/actions/Formsubmit"
+import { useAuthHydrated } from "../lib/store/useAuthhydration"
 
 //useformstatus work for parent so make submitbutton as component of formbutton
 const SubmitButton = ({ type }: { type: "signin" | "signup" }) => {
@@ -31,6 +32,7 @@ const SubmitButton = ({ type }: { type: "signin" | "signup" }) => {
 };
 
 export const Formbutton = ({ type }: { type: "signin" | "signup" }) => {
+    const {login}=useAuthHydrated()
     const [name, setname] = useState<string>("")
     const [email, setemail] = useState<string>("")
     const [password, setpassword] = useState<string>("")
@@ -43,14 +45,14 @@ export const Formbutton = ({ type }: { type: "signin" | "signup" }) => {
     return (
         <form action={async () => {
             // Simulate 3 second API call
-         const {mess,token}=  await Formsubmitaction({type:type,name:name,email:email,password:password})
+         const {user,mess,token}=  await Formsubmitaction({type:type,name:name,email:email,password:password})
          if(!token) {
             seterror(true);
          }
          else
          {  
             seterror(false);
-            localStorage.setItem("token",`Bearer ${token}`)
+            login(user,token);
          }
            setmes(mess)
             return;

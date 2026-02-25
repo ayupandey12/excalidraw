@@ -1,6 +1,6 @@
 import express from "express"
 import "dotenv/config"
-import jwt from "jsonwebtoken"
+import jwt, { JwtPayload } from "jsonwebtoken"
 import { Roomschema, Signinschema ,Signupschema} from "@repo/zod/index";
 import { middleware } from "./middleware";
 import { prisma } from "@repo/db";
@@ -58,7 +58,8 @@ app.post('/signup',async (req,res)=>{
         const token=jwt.sign({userId:user.id,username:user.name},JWT_SECRET)
         return res.status(200).json({
             mess:"signup successfull",
-            token:token
+            token:token,
+            user:{userId:user.id,username:user.name}
         })
     } catch (error) {
         return res.status(411).json({
@@ -89,7 +90,8 @@ app.post('/signin',async (req,res)=>{
         const token=jwt.sign({userId:user.id,username:user.name},JWT_SECRET)
         return res.status(200).json({
             mess:"signin successfull",
-            token:token
+            token:token,
+            user:{userId:user.id,username:user.name}
         })
     } catch (error) {
         return res.status(411).json({
@@ -157,5 +159,17 @@ app.get('/findroomid/:roomname',async (req,res)=>{
     } catch (error) {
         res.status(411).json({mess:"no roomId  with this roomname "})
     }
+})
+app.get('/isloggedin',(req,res)=>{
+        const token=req.headers["authorization"]?.split(" ")[1]||"";
+        const decode=jwt.verify(token,JWT_SECRET);
+        if(!decode||!(decode as unknown as JwtPayload).userID||!(decode as unknown as JwtPayload).username)
+        {
+            res.status(411).json({
+                mess:"unauthorized user!"
+            })
+            return;
+        }
+        res.json({decode});
 })
 app.listen(3010)
