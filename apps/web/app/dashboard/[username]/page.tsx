@@ -1,7 +1,6 @@
 const dashboard=async({ params }:{params:Promise<{username:String}>})=>{
-  const router=await params
-  console.log(router)
-  const {username}=router
+  const {username}=await params
+  
   return (
     <div>{username}</div>
   )

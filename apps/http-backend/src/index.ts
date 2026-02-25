@@ -55,7 +55,7 @@ app.post('/signup',async (req,res)=>{
                 password:respone.data.password
             }
         })
-        const token=jwt.sign({userId:user.id},JWT_SECRET)
+        const token=jwt.sign({userId:user.id,username:user.name},JWT_SECRET)
         return res.status(200).json({
             mess:"signup successfull",
             token:token
@@ -86,7 +86,7 @@ app.post('/signin',async (req,res)=>{
         return ;
     }
       try {
-        const token=jwt.sign({userId:user.id},JWT_SECRET)
+        const token=jwt.sign({userId:user.id,username:user.name},JWT_SECRET)
         return res.status(200).json({
             mess:"signin successfull",
             token:token

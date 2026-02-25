@@ -11,9 +11,10 @@ export async function Formsubmitaction({ type,name,email,password }: { type: "si
         mess:message,
         token:token
       }
-   } catch (error) {
+   } catch (error:any) {
+    console.log(error.response.data.mess)
     return{
-      mess:"backend server is down!",
+      mess:error.response.data.mess||"backend server is down!",
       token:undefined
     }
    }
